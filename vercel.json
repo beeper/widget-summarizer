@@ -1,0 +1,7 @@
+{
+  "functions": {
+    "app/generate.tsx": {
+      "maxDuration": 60
+    }
+  }
+}
