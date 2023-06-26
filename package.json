@@ -2,6 +2,11 @@
   "name": "summarizer-widget",
   "version": "0.1.0",
   "private": true,
+  "workspaces": [
+    "matrix-widget-toolkit/api",
+    "matrix-widget-toolkit/react",
+    "matrix-widget-toolkit/mui"
+  ],
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -13,6 +18,7 @@
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@matrix-widget-toolkit/api": "^3.2.1",
+    "@matrix-widget-toolkit/mui": "^1.1.4",
     "@matrix-widget-toolkit/react": "^1.0.5",
     "@mui/material": "^5.13.5",
     "@types/node": "20.3.1",

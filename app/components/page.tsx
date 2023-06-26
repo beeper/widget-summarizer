@@ -8,7 +8,7 @@ import {
     ROOM_EVENT_REDACTION,
     STATE_EVENT_POWER_LEVELS, WidgetApi,
 } from '@matrix-widget-toolkit/api';
-import {MuiCapabilitiesGuard} from '@/matrix-widget-toolkit/mui';
+import {MuiCapabilitiesGuard} from '@matrix-widget-toolkit/mui';
 import {useWidgetApi} from '@matrix-widget-toolkit/react';
 import {EventDirection, WidgetEventCapability} from 'matrix-widget-api';
 import {ReactElement, useMemo, useState, useEffect} from 'react';
@@ -192,7 +192,6 @@ function TestPageContent() {
 
                 setMessageCount(messages.length)
                 generateSummary(messages, displayNameData)
-
             })
     }
 

@@ -24,7 +24,7 @@ export async function POST(req: Request) {
         body: JSON.stringify({
             prompt: `Human: ${prompt}\n\nAssistant:`,
             model: 'claude-v1',
-            max_tokens_to_sample: 300,
+            max_tokens_to_sample: 1000,
             temperature: 0.9,
             stream: true
         })
