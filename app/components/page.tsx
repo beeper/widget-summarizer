@@ -8,7 +8,7 @@ import {
     ROOM_EVENT_REDACTION,
     STATE_EVENT_POWER_LEVELS, WidgetApi,
 } from '@matrix-widget-toolkit/api';
-import {MuiCapabilitiesGuard} from '@matrix-widget-toolkit/mui';
+import {MuiCapabilitiesGuard} from '@/matrix-widget-toolkit/mui';
 import {useWidgetApi} from '@matrix-widget-toolkit/react';
 import {EventDirection, WidgetEventCapability} from 'matrix-widget-api';
 import {ReactElement, useMemo, useState, useEffect} from 'react';
@@ -30,15 +30,8 @@ import {
 } from '@mui/material';
 import {StateEvent} from '@matrix-widget-toolkit/api';
 import {RoomEvent} from '@matrix-widget-toolkit/api';
-import {
-    MuiThemeProvider,
-    MuiWidgetApiProvider,
-} from '@matrix-widget-toolkit/mui';
-
-
 
 import { useCompletion } from 'ai/react'
-import {AI_PROMPT, Client, HUMAN_PROMPT} from "@anthropic-ai/sdk";
 
 /**
  * A component that reads and writes related room events via the widget API.

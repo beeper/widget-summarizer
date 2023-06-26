@@ -5,7 +5,7 @@ import {STATE_EVENT_ROOM_NAME} from '@/events';
 import {
     MuiThemeProvider,
     MuiWidgetApiProvider,
-} from '@matrix-widget-toolkit/mui';
+} from '@/matrix-widget-toolkit/mui';
 import Link from 'next/link'
 import {WidgetApi} from '@matrix-widget-toolkit/api';
 import {ReactElement} from "react";
