@@ -116,8 +116,16 @@ function quoteString(input: string) {
 }
 function TestPageContent() {
 
+
+    const [clicked, setClicked] = useState(false)
+
     const { complete, completion, isLoading } = useCompletion({
-        api: '/api/completion'
+        api: '/api/completion',
+        onResponse: res => {
+            // trigger something when the response starts streaming in
+            // e.g. if the user is rate limited, you can show a toast
+            setClicked(false);
+        },
     })
 
     const [summary, setSummary] = useState("");
@@ -130,7 +138,7 @@ function TestPageContent() {
         // also: there's "An optional room_ids property may also be added to the data object by the widget, indicating which room(s) to listen for events in. This is either an array of room IDs, undefined, or the special string "*" to denote "any room in which the widget has permission for reading that event" (covered later). When undefined, the client should send events sent in the user's currently viewed room only."
         // also interesting: "To complement the send/receive event capabilities, a single capability is introduced to access the timelines of other rooms: m.timeline:<Room ID>. The <Room ID> can either be an actual room ID, or a * to denote all joined or invited rooms the client is able to see, current and future. The widget can limit its exposure by simply requesting highly scoped send/receive capabilities to accompany the timeline capability."
         // interesting workaround: "There is no Widget API action exposed for listing the user's invited/joined rooms: the widget can request permission to read/receive the m.room.create state event of rooms and query that way. Clients should be aware of this trick and describe the situation appropriately to users."
-        const response: RoomEvent<any>[] = await widgetApi.receiveRoomEvents('m.room.message');
+        const response: RoomEvent<any>[] = await widgetApi.receiveRoomEvents('m.room.message', {limit: 1000});
         console.log(response)
 
 
@@ -186,12 +194,14 @@ function TestPageContent() {
     function summarize() {
 
         setMessageCount(null)
+        setClicked(true);
 
         fetchData()
             .then(({messages, displayNameData}) => {
 
                 setMessageCount(messages.length)
                 generateSummary(messages, displayNameData)
+
             })
     }
 
@@ -199,7 +209,8 @@ function TestPageContent() {
         <>
             <button onClick={summarize} className="text-lg block border-2 border-black px-8 py-4 rounded-lg mx-auto mt-20 hover:bg-black hover:text-white">Summarize</button>
             <div className="mt-5 p-3">
-                {messageCount && <p className="font-semibold">{messageCount} messages:</p>}
+                {clicked && <p>Computing...</p>}
+                {messageCount && <p className="font-semibold">Summarizing {messageCount} messages:</p>}
                 <pre className="max-w-full whitespace-pre-wrap font-sans">{completion}</pre>
             </div>
 
