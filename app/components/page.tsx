@@ -30,7 +30,7 @@ interface RoomMessageEvent {
     body: string;
 }
 
-
+// TODO: maybe use forRoomMessageEvent
 export default function WidgetPage() {
     return (
         <>
@@ -52,6 +52,10 @@ export default function WidgetPage() {
                         WidgetEventCapability.forRoomEvent(
                             EventDirection.Receive,
                             ROOM_EVENT_REDACTION
+                        ),
+                        WidgetEventCapability.forRoomAccountData(
+                            EventDirection.Receive,
+                            'm.fully_read'
                         ),
                     ]}
                 >
@@ -103,12 +107,13 @@ function processMessages(roomEvents: RoomEvent<any>[]) {
     return messages
 }
 
-
-
 function WidgetPageContent() {
 
     const [loading, setLoading] = useState(true)
     const [status, setStatus] = useState("");
+    const [summarized, setSummarized] = useState(true)
+    const [count, setCount] = useState(250);
+    const [messageCount, setMessageCount] = useState(0);
     const { complete, completion, isLoading } = useCompletion({
         api: '/api/completion',
         onResponse: res => {
@@ -116,30 +121,47 @@ function WidgetPageContent() {
             setStatus(`${messageCount} messages:`)
         },
     })
-    let messageCount: number;
     const widgetApi = useWidgetApi();
 
-    async function fetchData() {
-        const fullyReadData = await widgetApi.receiveRoomAccountData('m.fully_read');
-        const fullyRead: string | undefined = fullyReadData[0].content.event_id;
-        const roomEvents: RoomEvent<RoomMessageEvent>[] = await widgetApi.receiveRoomEvents('m.room.message', {limit: 500, since: fullyRead});
+    // TODO: there's a limit here, as well as one in the client. Which to use? Which to keep for the final API?
+    async function fetchData(unread: boolean, limit: number = 500) {
+
+        let roomEvents: RoomEvent<RoomMessageEvent>[];
+
+        if (unread === true) {
+            const fullyReadData = await widgetApi.receiveRoomAccountData('m.fully_read');
+            const fullyRead: string | undefined = fullyReadData[0].content.event_id;
+            roomEvents = await widgetApi.receiveRoomEvents('m.room.message', {limit: limit, since: fullyRead});
+        } else {
+            roomEvents = await widgetApi.receiveRoomEvents('m.room.message', {limit: limit});
+        }
+
         const messages = processMessages(roomEvents);
         const displayNameData = await getDisplayNameData(widgetApi);
         return {messages, displayNameData}
     }
 
     useEffect(() => {
-        fetchData()
+        fetchData(true)
             .then(({messages, displayNameData}) => {
                 if (messages.length !== 0) {
-                    messageCount = messages.length;
+                    setMessageCount(messages.length);
                     generateSummary(messages, displayNameData);
                 } else {
                     setLoading(false);
-                    setStatus("No new messages");
+                    setSummarized(false)
                 }
             })
     }, []);
+
+    function summarize() {
+        setLoading(true);
+        fetchData(false, count).then(({messages, displayNameData}) => {
+            console.log(messages);
+            setMessageCount(messages.length);
+            generateSummary(messages, displayNameData);
+        })
+    }
 
      function generateSummary(messages: Message[], displayNameData: Record<string, string>) {
         const prewritten_prompt = "You are a message summarizer bot designed to summarize all the messages that have occurred in a group chat while I have been gone. Below are the chat messages. Tell me what has occurred, in an easy-to-understand way that preserves all the important information. Include specific details and links when relevant.\n\n"
@@ -155,13 +177,47 @@ function WidgetPageContent() {
     return (
         <>
             <div className="mt-5 p-3">
-                {loading && <p>Computing...</p>}
-                <p className="font-semibold">{status}</p>
+                {!summarized && !loading && (
+                    <>
+                        <p className="font-semibold">No new messages</p>
+                        <p>Summarize the</p>
+                        <input className="border-2 border-black" type="number" step="1" onChange={(e) => {
+                            setCount(parseInt(e.target.value));
+                        }} value={count}/>
+                        <p>most recent messages</p>
+                        <button className="border-2 border-black"onClick={summarize}>Summarize</button>
+                    </>
+                )}
+                {loading ? <p>Computing...</p> : <p className="font-semibold">{messageCount} messages:</p>}
+
                 <pre className="max-w-full whitespace-pre-wrap font-sans">{completion}</pre>
             </div>
         </>
     )
 }
+
+
+// function WidgetPageContent() {
+//     const widgetApi = useWidgetApi();
+//
+//     useEffect(() => {
+//         async function getData() {
+//             // const fullyReadData = await widgetApi.receiveRoomAccountData('m.fully_read');
+//             // console.log("Fully Read:")
+//             // console.log(fullyReadData);
+//
+//             const roomEvents: RoomEvent<RoomMessageEvent>[] = await widgetApi.receiveRoomEvents('m.room.message', {limit: 500});
+//             console.log("Room Events:")
+//             console.log(roomEvents)
+//         }
+//
+//         getData();
+//     }, []);
+//
+//     return (
+//         <p>hello world</p>
+//     )
+// }
 
 // TODO: is this needed?
 function usePermissions() {
