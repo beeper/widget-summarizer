@@ -1,15 +1,12 @@
 "use client"
 import {WidgetApiImpl} from '@matrix-widget-toolkit/api';
-import {EventDirection, WidgetEventCapability} from 'matrix-widget-api';
-import {STATE_EVENT_ROOM_NAME} from '@/events';
 import {
     MuiThemeProvider,
     MuiWidgetApiProvider,
 } from '@matrix-widget-toolkit/mui';
-import Link from 'next/link'
 import {WidgetApi} from '@matrix-widget-toolkit/api';
 import {ReactElement} from "react";
-import TestPage from "@/app/components/page"
+import WidgetPage from "@/app/components/page"
 
 
 // Initiate the widget API on startup. The Client will initiate
@@ -41,7 +38,7 @@ function App({
                     name: 'Summarizer'
                 }}
             >
-                <TestPage />
+                <WidgetPage />
             </MuiWidgetApiProvider>
         </MuiThemeProvider>
     );
