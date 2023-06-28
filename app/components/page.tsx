@@ -114,6 +114,32 @@ function quoteString(input: string) {
     const quotedLines = lines.map(line => '> ' + line);
     return quotedLines.join('\n');
 }
+
+// function TestPageContent() {
+//     const widgetApi = useWidgetApi();
+//
+//     useEffect(() => {
+//
+//         async function fetchData() {
+//
+//             // TODO: why receive rather than read
+//             // const messages_response: any = await widgetApi.receiveRoomAccountData('m.fully_read');
+//             // console.log(messages_response)
+//
+//             const response: RoomEvent<any>[] = await widgetApi.receiveRoomEvents('m.room.message', {limit: 500});
+//             console.log(response)
+//
+//         }
+//
+//
+//         fetchData();
+//     }, []);
+//
+//     return (
+//         <p>hello world</p>
+//     )
+// }
+
 function TestPageContent() {
 
 
@@ -122,8 +148,6 @@ function TestPageContent() {
     const { complete, completion, isLoading } = useCompletion({
         api: '/api/completion',
         onResponse: res => {
-            // trigger something when the response starts streaming in
-            // e.g. if the user is rate limited, you can show a toast
             setClicked(false);
         },
     })
@@ -138,17 +162,21 @@ function TestPageContent() {
         // also: there's "An optional room_ids property may also be added to the data object by the widget, indicating which room(s) to listen for events in. This is either an array of room IDs, undefined, or the special string "*" to denote "any room in which the widget has permission for reading that event" (covered later). When undefined, the client should send events sent in the user's currently viewed room only."
         // also interesting: "To complement the send/receive event capabilities, a single capability is introduced to access the timelines of other rooms: m.timeline:<Room ID>. The <Room ID> can either be an actual room ID, or a * to denote all joined or invited rooms the client is able to see, current and future. The widget can limit its exposure by simply requesting highly scoped send/receive capabilities to accompany the timeline capability."
         // interesting workaround: "There is no Widget API action exposed for listing the user's invited/joined rooms: the widget can request permission to read/receive the m.room.create state event of rooms and query that way. Clients should be aware of this trick and describe the situation appropriately to users."
-        const response: RoomEvent<any>[] = await widgetApi.receiveRoomEvents('m.room.message', {limit: 500});
-        console.log(response)
+
+        const roomEvents: RoomEvent<any>[] = await widgetApi.receiveRoomEvents('m.room.message', {limit: 500});
+        console.log(roomEvents)
+
+        const fullyRead: any = await widgetApi.receiveRoomAccountData('m.fully_read');
+        console.log(fullyRead)
 
 
         let messages_store: Record<string, Message> = {}
 
-        response.forEach((message) => {
+        roomEvents.forEach((message) => {
             messages_store[message.event_id] = {user: message.sender, content: message.content.body as string}
         })
 
-        const messages: Message[] = response.reduce((acc: Message[], x): Message[] => {
+        const messages: Message[] = roomEvents.reduce((acc: Message[], x): Message[] => {
 
                 // don't double-add edited messages
                 if (x.content.body && typeof x.content.body === 'string' && !x.content.body.startsWith('* ')) {
@@ -168,7 +196,6 @@ function TestPageContent() {
                 return acc;
             }, []);
 
-        messages.reverse();
         const displayNameData = await getDisplayNameData(widgetApi);
         return {messages, displayNameData}
     }
