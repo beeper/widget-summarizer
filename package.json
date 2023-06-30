@@ -5,8 +5,7 @@
   "workspaces": [
     "matrix-widget-toolkit/api",
     "matrix-widget-toolkit/react",
-    "matrix-widget-toolkit/mui",
-    "matrix-widget-api"
+    "matrix-widget-toolkit/mui"
   ],
   "scripts": {
     "dev": "next dev",
@@ -32,7 +31,7 @@
     "eslint": "8.42.0",
     "eslint-config-next": "13.4.5",
     "joi": "^17.9.2",
-    "matrix-widget-api": "^1.4.0",
+    "@beeper/matrix-widget-api": "^1.5.0",
     "next": "13.4.5",
     "postcss": "8.4.24",
     "react": "18.2.0",
