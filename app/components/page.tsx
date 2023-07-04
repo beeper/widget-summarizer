@@ -1,8 +1,5 @@
 "use client"
 
-import {
-    ROOM_EVENT_REDACTION,
-} from '@matrix-widget-toolkit/api';
 import {MuiCapabilitiesGuard} from '@matrix-widget-toolkit/mui';
 import {useWidgetApi} from '@matrix-widget-toolkit/react';
 import {EventDirection, WidgetEventCapability} from '@beeper/matrix-widget-api';
@@ -51,7 +48,7 @@ export default function WidgetPage() {
                         ),
                         WidgetEventCapability.forRoomEvent(
                             EventDirection.Receive,
-                            ROOM_EVENT_REDACTION
+                            'm.room.redaction'
                         ),
                         WidgetEventCapability.forRoomAccountData(
                             EventDirection.Receive,
