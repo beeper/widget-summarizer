@@ -2,12 +2,6 @@
   "name": "summarizer-widget",
   "version": "0.1.0",
   "private": true,
-  "workspaces": [
-    "matrix-widget-toolkit/api",
-    "matrix-widget-toolkit/react",
-    "matrix-widget-toolkit/mui",
-    "matrix-widget-api"
-  ],
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -18,9 +12,9 @@
     "@anthropic-ai/sdk": "^0.4.4",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
-    "@matrix-widget-toolkit/api": "^3.2.1",
-    "@matrix-widget-toolkit/mui": "^1.1.4",
-    "@matrix-widget-toolkit/react": "^1.0.5",
+    "@beeper/matrix-widget-toolkit-api": "^3.3.0",
+    "@beeper/matrix-widget-toolkit-mui": "^1.1.5",
+    "@beeper/matrix-widget-toolkit-react": "^1.0.8",
     "@mui/material": "^5.13.5",
     "@types/node": "20.3.1",
     "@types/react": "18.2.12",

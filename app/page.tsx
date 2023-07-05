@@ -1,10 +1,10 @@
 "use client"
-import {WidgetApiImpl} from '@matrix-widget-toolkit/api';
+import {WidgetApiImpl} from '@beeper/matrix-widget-toolkit-api';
 import {
     MuiThemeProvider,
     MuiWidgetApiProvider,
-} from '@matrix-widget-toolkit/mui';
-import {WidgetApi} from '@matrix-widget-toolkit/api';
+} from '@beeper/matrix-widget-toolkit-mui';
+import {WidgetApi} from '@beeper/matrix-widget-toolkit-api';
 import {ReactElement} from "react";
 import WidgetPage from "@/app/components/page"
 

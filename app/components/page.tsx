@@ -1,17 +1,17 @@
 "use client"
 
-import {MuiCapabilitiesGuard} from '@matrix-widget-toolkit/mui';
-import {useWidgetApi} from '@matrix-widget-toolkit/react';
+import {MuiCapabilitiesGuard} from '@beeper/matrix-widget-toolkit-mui';
+import {useWidgetApi} from '@beeper/matrix-widget-toolkit-react';
 import {EventDirection, WidgetEventCapability} from '@beeper/matrix-widget-api';
 import {useState, useEffect} from 'react';
 import {
     Box
 } from '@mui/material';
-import {RoomEvent} from '@matrix-widget-toolkit/api';
+import {RoomEvent} from '@beeper/matrix-widget-toolkit-api';
 import { useCompletion } from 'ai/react';
 
 import { getDisplayNameData, processMessages, Message, RoomMessageEvent } from '@/app/helpers';
-import {RoomAccountData} from "@/matrix-widget-toolkit/api/src/api/types";
+// import {RoomAccountData} from "@beeper/matrix-widget-toolkit-api/src/api/types";
 
 function generatePrompt(messages: Message[], displayNameData: Record<string, string>) {
     const start_prompt = "Here is a transcript of a chat:"
@@ -67,7 +67,6 @@ export default function WidgetPage() {
 
 function WidgetPageContent() {
 
-
     const [noMessages, setNoMessages] = useState(false);
     const [loading, setLoading] = useState(true);
     const [summarizing, setSummarizing] = useState(false);
@@ -89,7 +88,7 @@ function WidgetPageContent() {
         let roomEvents: RoomEvent<RoomMessageEvent>[];
 
         if (useUnread) {
-            const fullyReadData: RoomAccountData<any>[] = await widgetApi.receiveRoomAccountData('m.fully_read');
+            const fullyReadData: any[] = await widgetApi.receiveRoomAccountData('m.fully_read');
             console.log(fullyReadData);
             const fullyRead: string | undefined = fullyReadData[0].content.event_id;
             roomEvents = await widgetApi.receiveRoomEvents('m.room.message', {limit: limit, since: fullyRead});
