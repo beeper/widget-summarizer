@@ -20,7 +20,11 @@ export async function getDisplayNameData(widgetApi: WidgetApi) {
     return user_dict
 }
 
-function quoteString(input: string) {
+function quoteString(input: string | undefined) {
+    if (input === undefined) {
+        return "";
+    }
+
     const lines = input.split('\n');
     const quotedLines = lines.map(line => '> ' + line);
     return quotedLines.join('\n');
