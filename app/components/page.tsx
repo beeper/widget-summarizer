@@ -27,7 +27,6 @@ function generatePrompt(messages: Message[], displayNameData: Record<string, str
         messages_prompt += `\n${username}: ${message.content}`;
     })
 
-    // console.log(messages_prompt)
     return `${start_prompt}\n\n${messages_prompt}\n\n${end_prompt}`;
 }
 
@@ -92,7 +91,6 @@ function WidgetPageContent() {
 
         if (useUnread) {
             const fullyReadData: any[] = await widgetApi.receiveRoomAccountData('m.fully_read');
-            console.log(fullyReadData);
             const fullyRead: string | undefined = fullyReadData[0].content.event_id;
             roomEvents = await widgetApi.receiveRoomEvents('m.room.message', {limit: limit, since: fullyRead});
         } else {
