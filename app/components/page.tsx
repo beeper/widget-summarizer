@@ -76,9 +76,9 @@ function WidgetPageContent() {
     const [count, setCount] = useState(250);
     const [messageCount, setMessageCount] = useState(0);
 
-    const { complete, completion, isLoading } = useCompletion({
+    const { complete, completion } = useCompletion({
         api: '/api/completion',
-        onResponse: res => {
+        onResponse: () => {
             setLoading(false);
             setSummarizing(true);
         },
@@ -105,7 +105,7 @@ function WidgetPageContent() {
 
     useEffect(() => {
         summarize(true);
-    }, []);
+    });
 
     function summarize(useUnread: boolean, limit?: number) {
         setLoading(true);
@@ -132,7 +132,7 @@ function WidgetPageContent() {
                     <>
                         <p className="font-medium font-sans text-gray-600">No new messages.</p>
                         <p className="font-bold font-sans text-xl mt-1">Summarize recent messages?</p>
-                        <input className="block border-2 border-gray-200 px-2 py-2 w-20 mt-4 rounded-lg focus:ring focus:outline-none ring-gray-300" type="number" step="1" min="1" max="1000" onChange={(e) => setCount(parseInt(e.target.value))} value={count}/>
+                        <input className="block border-2 border-gray-200 px-2 py-2 w-20 mt-4 rounded-lg focus:ring focus:outline-none ring-gray-300 text-black" type="number" step="1" min="1" max="1000" onChange={(e) => setCount(parseInt(e.target.value))} value={count}/>
                         <button className="block rounded-lg px-10 py-3 text-center bg-black text-white mt-6 transition duration-300 hover:bg-gray-800" onClick={() => summarize(false, count)}>Summarize</button>
                     </>
                 )}
