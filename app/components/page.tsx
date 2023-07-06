@@ -1,9 +1,6 @@
 "use client"
 
 import dynamic from 'next/dynamic'
-const MuiCapabilitiesGuard = dynamic(() => import('@beeper/matrix-widget-toolkit-mui').then((mod) => mod.MuiCapabilitiesGuard), {
-    ssr: false,
-})
 import {useWidgetApi} from '@beeper/matrix-widget-toolkit-react';
 import {EventDirection, WidgetEventCapability} from '@beeper/matrix-widget-api';
 import {useState, useEffect} from 'react';
@@ -15,6 +12,10 @@ import { useCompletion } from 'ai/react';
 
 import { getDisplayNameData, processMessages, Message, RoomMessageEvent } from '@/app/helpers';
 // import {RoomAccountData} from "@beeper/matrix-widget-toolkit-api/src/api/types";
+
+const MuiCapabilitiesGuard = dynamic(() => import('@beeper/matrix-widget-toolkit-mui').then((mod) => mod.MuiCapabilitiesGuard), {
+    ssr: false,
+})
 
 function generatePrompt(messages: Message[], displayNameData: Record<string, string>) {
     const start_prompt = "Here is a transcript of a chat:"

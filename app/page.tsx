@@ -2,6 +2,9 @@
 
 import dynamic from "next/dynamic";
 // TODO: this should be imported client-side. Breaks builds sometimes
+import {WidgetApi} from '@beeper/matrix-widget-toolkit-api';
+import {ReactElement} from "react";
+import WidgetPage from "@/app/components/page"
 import {WidgetApiImpl} from '@beeper/matrix-widget-toolkit-api';
 
 const MuiThemeProvider = dynamic(() => import('@beeper/matrix-widget-toolkit-mui').then((mod) => mod.MuiThemeProvider), {
@@ -10,10 +13,6 @@ const MuiThemeProvider = dynamic(() => import('@beeper/matrix-widget-toolkit-mui
 const MuiWidgetApiProvider = dynamic(() => import('@beeper/matrix-widget-toolkit-mui').then((mod) => mod.MuiWidgetApiProvider), {
     ssr: false,
 })
-import {WidgetApi} from '@beeper/matrix-widget-toolkit-api';
-import {ReactElement} from "react";
-import WidgetPage from "@/app/components/page"
-
 
 // Initiate the widget API on startup. The Client will initiate
 // the connection with `capabilities` and we need to make sure
