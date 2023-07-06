@@ -45,14 +45,14 @@ export default function WidgetPage() {
                             EventDirection.Receive,
                             'm.room.message'
                         ),
-                        WidgetEventCapability.forRoomEvent(
-                            EventDirection.Receive,
-                            'm.reaction'
-                        ),
-                        WidgetEventCapability.forRoomEvent(
-                            EventDirection.Receive,
-                            'm.room.redaction'
-                        ),
+                        // WidgetEventCapability.forRoomEvent(
+                        //     EventDirection.Receive,
+                        //     'm.reaction'
+                        // ),
+                        // WidgetEventCapability.forRoomEvent(
+                        //     EventDirection.Receive,
+                        //     'm.room.redaction'
+                        // ),
                         WidgetEventCapability.forRoomAccountData(
                             EventDirection.Receive,
                             'm.fully_read'
