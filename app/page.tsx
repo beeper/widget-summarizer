@@ -1,9 +1,24 @@
 "use client"
+import dynamic from "next/dynamic";
+
 import {WidgetApiImpl} from '@beeper/matrix-widget-toolkit-api';
-import {
-    MuiThemeProvider,
-    MuiWidgetApiProvider,
-} from '@beeper/matrix-widget-toolkit-mui';
+
+// const WidgetApiImpl = dynamic(() => import('@beeper/matrix-widget-toolkit-api').then((mod) => mod.WidgetApiImpl), {
+//     ssr: false,
+// })
+
+// import {
+//     MuiThemeProvider,
+//     MuiWidgetApiProvider,
+// } from '@beeper/matrix-widget-toolkit-mui';
+
+const MuiThemeProvider = dynamic(() => import('@beeper/matrix-widget-toolkit-mui').then((mod) => mod.MuiThemeProvider), {
+    ssr: false,
+})
+
+const MuiWidgetApiProvider = dynamic(() => import('@beeper/matrix-widget-toolkit-mui').then((mod) => mod.MuiWidgetApiProvider), {
+    ssr: false,
+})
 import {WidgetApi} from '@beeper/matrix-widget-toolkit-api';
 import {ReactElement} from "react";
 import WidgetPage from "@/app/components/page"
