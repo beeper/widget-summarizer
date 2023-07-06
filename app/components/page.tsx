@@ -105,7 +105,7 @@ function WidgetPageContent() {
 
     useEffect(() => {
         summarize(true);
-    });
+    }, []);
 
     function summarize(useUnread: boolean, limit?: number) {
         setLoading(true);
