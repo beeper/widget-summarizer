@@ -1,4 +1,4 @@
-import {RoomEvent, WidgetApi} from "@/matrix-widget-toolkit/api";
+import {RoomEvent, WidgetApi} from "@beeper/matrix-widget-toolkit-api";
 
 export interface Message {
     user: string;

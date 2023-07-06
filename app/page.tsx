@@ -1,16 +1,8 @@
 "use client"
+
 import dynamic from "next/dynamic";
-
+// TODO: this should be imported client-side. Breaks builds sometimes
 import {WidgetApiImpl} from '@beeper/matrix-widget-toolkit-api';
-
-// const WidgetApiImpl = dynamic(() => import('@beeper/matrix-widget-toolkit-api').then((mod) => mod.WidgetApiImpl), {
-//     ssr: false,
-// })
-
-// import {
-//     MuiThemeProvider,
-//     MuiWidgetApiProvider,
-// } from '@beeper/matrix-widget-toolkit-mui';
 
 const MuiThemeProvider = dynamic(() => import('@beeper/matrix-widget-toolkit-mui').then((mod) => mod.MuiThemeProvider), {
     ssr: false,
