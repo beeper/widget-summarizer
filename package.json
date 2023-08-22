@@ -11,9 +11,9 @@
   "dependencies": {
     "@anthropic-ai/sdk": "^0.4.4",
     "@beeper/matrix-widget-api": "^1.5.1",
-    "@beeper/matrix-widget-toolkit-api": "^3.3.0",
-    "@beeper/matrix-widget-toolkit-mui": "^1.1.5",
-    "@beeper/matrix-widget-toolkit-react": "^1.0.8",
+    "@beeper/matrix-widget-toolkit-api": "^3.3.5",
+    "@beeper/matrix-widget-toolkit-mui": "^1.2.7",
+    "@beeper/matrix-widget-toolkit-react": "^1.0.11",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@mui/material": "^5.13.5",
